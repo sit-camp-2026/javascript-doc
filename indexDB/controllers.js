@@ -1,45 +1,43 @@
 import db from "./indexDB.js";
 
 /**
- * 
- * @param {{name: string, age: number, create_at: number}} data 
+ *
+ * @param {{name: string, age: number, create_at: number}} data
  */
-async function  postData(data) {
-    await db.create(data, "user")
+async function postData(data) {
+  await db.create(data, "user");
 }
 
 async function getAllData() {
-    const data = await db.findManny("user")
-    console.log("Get All user", data)
+  const response = await db.findManny("user");
+  console.log("Get All user", response);
 }
 
 /**
- * 
- * @param {number} id 
+ *
+ * @param {number} id
  */
 async function getDataById(id) {
-    const response = await db.find("user", id)
-    console.log("Get user by id", response)
+  const response = await db.find("user", id);
+  console.log("Get user by id", response);
 }
 
 /**
- * 
- * @param {number} id 
+ *
+ * @param {number} id
  * @param {{name: string, age: number, create_at: number}} data
  */
 async function updateData(id, data) {
-    await db.update(id, data, "user")
-    
+  await db.update(id, data, "user");
 }
 
 /**
- * 
- * @param {number} id 
+ *
+ * @param {number} id
  */
 async function deleteData(id) {
-   await db.delete(id, "user") 
+  await db.delete(id, "user");
 }
-
 
 // const data = {
 //     name: "Jhon Doe",
@@ -53,7 +51,7 @@ async function deleteData(id) {
 // }
 
 // postData(data)
-// getAllData()
+getAllData();
 // getDataById(2)
 // deleteData(1)
-// updateData(1, newData)
+// updateData(2, data)
