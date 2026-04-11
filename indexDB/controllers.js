@@ -1,57 +1,43 @@
 import db from "./indexDB.js";
 
 /**
- *
+ * @param {string} tableName
  * @param {{name: string, age: number, create_at: number}} data
  */
-async function postData(data) {
-  await db.create(data, "user");
-}
-
-async function getAllData() {
-  const response = await db.findManny("user");
-  console.log("Get All user", response);
+export async function postData(data, tableName) {
+  await db.create(data, tableName);
 }
 
 /**
- *
+ * @param {string} tableName
+ */
+export async function getAllData(tableName) {
+  const response = await db.findManny(tableName);
+  return response;
+}
+
+/**
+ * @param {string} tableName
  * @param {number} id
  */
-async function getDataById(id) {
-  const response = await db.find("user", id);
-  console.log("Get user by id", response);
+export async function getDataById(id, tableName) {
+  const response = await db.find(tableName, id);
+  return response;
 }
 
 /**
- *
+ * @param {string} tableName
  * @param {number} id
  * @param {{name: string, age: number, create_at: number}} data
  */
-async function updateData(id, data) {
-  await db.update(id, data, "user");
+export async function updateData(id, data, tableName) {
+  await db.update(id, data, tableName);
 }
 
 /**
- *
+ * @param {string} tableName
  * @param {number} id
  */
-async function deleteData(id) {
-  await db.delete(id, "user");
+export async function deleteData(id, tableName) {
+  await db.delete(id, tableName);
 }
-
-// const data = {
-//     name: "Jhon Doe",
-//     age: 20,
-//     create_at: Date.now()
-// }
-// const newData = {
-//     name: "Jhon Doe Jr",
-//     age: 20,
-//     create_at: Date.now()
-// }
-
-// postData(data)
-getAllData();
-// getDataById(2)
-// deleteData(1)
-// updateData(2, data)
