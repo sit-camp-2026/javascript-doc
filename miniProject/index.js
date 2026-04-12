@@ -1,11 +1,13 @@
-import { postData, getAllData } from "../indexDB/controllers.js";
+import { getAllData, postData } from "../indexDB/controllers.js";
 
+let countClick = 0;
 const list = document.getElementById("list");
 const showGPAResult = document.getElementById("show-gpa-result");
 
 const buttonAdd = document.getElementById("buttonAdd");
 const buttonReset = document.getElementById("buttonReset");
 const buttonCal = document.getElementById("buttonCal");
+
 
 buttonAdd.addEventListener("click", () => {
   list.classList.remove("hidden");
@@ -44,26 +46,33 @@ buttonReset.addEventListener("click", () => {
     row.querySelector(".credit").value = "";
   });
   list.innerHTML = "";
+  showGPAResult.classList.add("hidden");
   showGPAResult.innerHTML = "";
+  countClick = 0;
 });
 
 buttonCal.addEventListener("click", async () => {
-  const rowData = getRowsData()
-  const avgGPA = calculateGPA(rowData);
+  countClick++;
+  const rowData = getRowsData();
 
+  if (rowData.length === 0) return
+
+  const avgGPA = calculateGPA(rowData);
   const result = {
-    semester: 2,
     avgGPA,
     allSubjects: rowData,
   };
 
   postData(result, "gpa");
+  const allGPA = await getAllData("gpa");
 
-  const avgGPAX = calculateGPAX(await getAllData("gpa"));
-  postData(avgGPAX, "gpax");
-
-  showGPAResult.classList.remove("hidden");
-  showGPAResult.insertAdjacentHTML("beforeend", `<p>GPA: ${avgGPA.gpa.toFixed(2)}</p>`);
+  if (countClick <= 1 && allGPA.length !== 0) {
+    showGPAResult.classList.remove("hidden");
+    showGPAResult.insertAdjacentHTML(
+      "beforeend",
+      `<p>GPA: ${avgGPA.gpa.toFixed(2)}</p>`,
+    );
+  }
 });
 
 function calculateGPA(data) {
@@ -83,19 +92,6 @@ function calculateGPA(data) {
   };
 }
 
-function calculateGPAX(data) {
-  let totalCredit = 0;
-  let totalPoint = 0;
-
-  data.forEach(({ avgGPA }) => {
-    totalCredit += avgGPA.totalCredit;
-    totalPoint += avgGPA.totalPoint;
-  });
-
-  const gpax = totalPoint / totalCredit;
-  return { gpax };
-}
-
 function getRowsData() {
   const rows = document.querySelectorAll(".row");
   const data = [];
@@ -105,8 +101,9 @@ function getRowsData() {
     const gpa = Number(row.querySelector(".gpa").value);
     const credit = Number(row.querySelector(".credit").value);
 
+    if (!subject || !gpa || !credit) return null;
+
     data.push({ subject, gpa, credit });
   });
-
   return data;
 }
