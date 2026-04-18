@@ -1,6 +1,5 @@
 import { getAllData, postData } from "../indexDB/controllers.js";
 
-let countClick = 0;
 const list = document.getElementById("list");
 const showGPAResult = document.getElementById("show-gpa-result");
 
@@ -48,11 +47,9 @@ buttonReset.addEventListener("click", () => {
   list.innerHTML = "";
   showGPAResult.classList.add("hidden");
   showGPAResult.innerHTML = "";
-  countClick = 0;
 });
 
 buttonCal.addEventListener("click", async () => {
-  countClick++;
   const rowData = getRowsData();
 
   if (rowData.length === 0) return
@@ -66,12 +63,9 @@ buttonCal.addEventListener("click", async () => {
   postData(result, "gpa");
   const allGPA = await getAllData("gpa");
 
-  if (countClick <= 1 && allGPA.length !== 0) {
+  if (allGPA.length !== 0) {
     showGPAResult.classList.remove("hidden");
-    showGPAResult.insertAdjacentHTML(
-      "beforeend",
-      `<p>GPA: ${avgGPA.gpa.toFixed(2)}</p>`,
-    );
+    showGPAResult.innerHTML =  `<p>GPA: ${avgGPA.gpa.toFixed(2)}</p>`;
   }
 });
 
