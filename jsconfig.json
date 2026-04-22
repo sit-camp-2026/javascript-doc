@@ -6,6 +6,6 @@
     "target": "ES2024",
     "module": "ESNext"
   },
-  "include": ["./indexDB/**/*.js", "lib/indexDB-helper.js"],
+  "include": ["indexDB/controllers.js", "indexDB/indexDB.js", "lib/indexDB-helper.js"],
   "verbose": true
 }

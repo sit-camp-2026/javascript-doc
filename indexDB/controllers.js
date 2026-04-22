@@ -2,7 +2,7 @@ import db from "./indexDB.js";
 
 /**
  * @param {string} tableName
- * @param {{name: string, age: number, create_at: number}} data
+ * @param {object} data
  */
 export async function postData(data, tableName) {
   await db.create(data, tableName);
@@ -28,7 +28,7 @@ export async function getDataById(id, tableName) {
 /**
  * @param {string} tableName
  * @param {number} id
- * @param {{name: string, age: number, create_at: number}} data
+ * @param {object} data
  */
 export async function updateData(id, data, tableName) {
   await db.update(id, data, tableName);

@@ -11,25 +11,33 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="./index.js" defer type="module"></script>
+    <!-- <script src="../indexDB/simple-indexDB.js" defer type="module"></script> -->
     <title>Document</title>
   </head>
 
   <body>
     <section class="bg-zinc-100 min-h-screen grid-bg px-10 py-14 pb-20">
+
+       <!-- gpa-result -->
        <div
         id="show-gpa-result"
         class="bg-white overflow-hidden rounded-md border border-stone-200 shadow-lg mt-3 p-6 hidden mb-6"
       ></div>
+      
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <h1 class="text-base font-medium text-zinc-800">GPA Calculator</h1>
         <div class="flex items-center gap-2">
+
+          <!-- button reset -->
           <button
             id="buttonReset"
             class="bg-white border border-stone-200 text-zinc-600 rounded-md hover:bg-zinc-50 px-4 py-2 cursor-pointer text-sm transition-all duration-150"
           >
             Reset
           </button>
+
+          <!-- button calculate -->
           <button
             id="buttonCal"
             class="bg-red-500 text-white rounded-md hover:shadow-md hover:shadow-red-500/50 px-4 py-2 cursor-pointer text-sm font-medium transition-all duration-150"
@@ -54,16 +62,22 @@
             Credits
           </div>
         </div>
+
+        <!-- row input -->
         <div class="row grid grid-cols-3 gap-3 pt-3">
+
+          <!-- subject -->
           <input
             type="text"
             placeholder="Subject"
             class="subject bg-base border border-stone-200 px-3 py-2 rounded-sm w-full outline-none focus:border-lime focus:ring-1 focus:ring-lime/20 transition-all duration-150 text-sm"
           />
+
+          <!-- gpa -->
           <select
             class="gpa bg-base border border-stone-200 px-3 py-2 rounded-sm w-full outline-none focus:border-lime focus:ring-1 focus:ring-lime/20 transition-all duration-150 text-sm"
           >
-            <option value="" disabled selected>GPA</option>
+            <option value="" disabled selected>GRADE</option>
             <option value="4">4</option>
             <option value="3.5">3.5</option>
             <option value="3">3</option>
@@ -72,22 +86,29 @@
             <option value="1.5">1.5</option>
             <option value="1">1</option>
           </select>
+
+          <!-- credit -->
           <input
             type="text"
             placeholder="Credit"
             class="credit bg-base border border-stone-200 px-3 py-2 rounded-sm w-full outline-none focus:border-lime focus:ring-1 focus:ring-lime/20 transition-all duration-150 text-sm"
           />
         </div>
+
+        <!-- list of input -->
         <div class="hidden" id="list"></div>
       </div>
 
-      <!-- Footer -->
+      <!-- add row -->
       <button
         id="buttonAdd"
         class="bg-white border border-stone-200 text-zinc-600 rounded-md hover:bg-zinc-50 px-4 py-2 cursor-pointer text-sm transition-all duration-150 w-full mt-3"
       >
         Add row
       </button>
+
+      <!-- histoty -->
+      <div id="show-history"></div>
     </section>
   </body>
 </html>
