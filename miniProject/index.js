@@ -25,9 +25,9 @@ function handleAdd() {
             class="subject bg-base border border-stone-200 px-3 py-2 rounded-sm w-full outline-none focus:border-lime focus:ring-1 focus:ring-lime/20 transition-all duration-150 text-sm"
           />
           <select
-            class="gpa bg-base border border-stone-200 px-3 py-2 rounded-sm w-full outline-none focus:border-lime focus:ring-1 focus:ring-lime/20 transition-all duration-150 text-sm"
+            class="grade bg-base border border-stone-200 px-3 py-2 rounded-sm w-full outline-none focus:border-lime focus:ring-1 focus:ring-lime/20 transition-all duration-150 text-sm"
           >
-            <option value="" disabled selected>GPA</option>
+            <option value="" disabled selected>GRADE</option>
             <option value="4">4</option>
             <option value="3.5">3.5</option>
             <option value="3">3</option>
@@ -50,8 +50,9 @@ function handleAdd() {
 function handleReset() {
   list.innerHTML = "";
   list.classList.add("hidden");
-  showGPAResult.classList.add("hidden");
+
   showGPAResult.innerHTML = "";
+  showGPAResult.classList.add("hidden");
 }
 
 // ------------------------------------------------
@@ -66,7 +67,6 @@ async function handleCal() {
   const avgGPA = calculateGPA(rowData);
 
   await postData({ avgGPA, allSubjects: rowData }, "gpa");
-  const allGPA = await getAllData("gpa");
 
   showGPAResult.classList.remove("hidden");
   showGPAResult.innerHTML = `<p>GPA: ${avgGPA.gpa.toFixed(2)}</p>`;
@@ -80,12 +80,12 @@ function getRowsData() {
 
   rows.forEach((row) => {
     const subject = row.querySelector(".subject").value;
-    const gpa = Number(row.querySelector(".gpa").value);
+    const grade = Number(row.querySelector(".grade").value);
     const credit = Number(row.querySelector(".credit").value);
 
-    if (!subject || gpa <= 0 || credit <= 0) return;
+    if (!subject || grade <= 0 || credit <= 0) return;
 
-    data.push({ subject, gpa, credit });
+    data.push({ subject, grade, credit });
   });
 
   return data;
@@ -97,7 +97,7 @@ function calculateGPA(data) {
   let totalCredit = 0;
   let totalPoint = 0;
 
-  data.forEach(function (d) {
+  data.forEach((d) => {
     totalPoint += d.gpa * d.credit;
     totalCredit += d.credit;
   });
